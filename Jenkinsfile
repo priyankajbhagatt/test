@@ -6,7 +6,11 @@ pipeline {
         terraform 'terraform'
     }
     stages {
-        
+         stage('Maven version') {
+            steps {
+            sh 'mvn verify'
+            }
+           }
         stage('Terraform version') {
             steps {
             sh 'terraform version'
