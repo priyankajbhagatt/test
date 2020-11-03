@@ -1,30 +1,17 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine' 
-            args '-v /root/.m2:/root/.m2' 
-        }
+    agent any
+    tools {
+        maven 'Maven3'
+        jdk 'jdk1.8'
+        terraform 'terraform'
     }
     stages {
-        stage('Build') { 
+        
+        stage('Terraform version') {
             steps {
-                sh 'mvn -B -DskipTests clean package' 
+            sh 'terraform version'
             }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
-    }
-}
+           }
+           
+       }
+       }
